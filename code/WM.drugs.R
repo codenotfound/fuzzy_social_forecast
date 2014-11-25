@@ -1,19 +1,23 @@
 ##  Fuzzy rule-based system based on space partition. Wang and Mendel’s technique (WM), 1992.
 
 library(frbs)
+library(knitr)
 library(stringi)
 library(xlsx)
 
 ## load file
-path <- normalizePath(file.path(".", "data", 
-                                "В состоянии наркотического опьянения.xlsx")) #we are in root folder, so '.'
+## we are in root folder, so '.'
+path <- normalizePath(file.path("..", "data", 
+                                "В состоянии наркотического опьянения.xlsx")) 
 tmp <- read.xlsx(path, sheetIndex=1,header=T)
 
 # cleaning
 Sys.setlocale("LC_TIME", "ru_RU.utf8") 
 names(tmp) <- stri_trans_general(names(tmp), 
                    "Any-Latin; nfd; [:nonspacing mark:] remove; nfc")
-if(false)
+tmp$X.Vrema <- as.integer(tmp$X.Vrema <- substr(tmp$X.Vrema, start=0, stop=4))
+
+if(FALSE)
 {
 ## Create dataset
 ## 22 records on UA enrollments
@@ -39,7 +43,9 @@ range.data <- apply(data.train,2,range)
 
 ## Set the method and its parameters
 method.type <- "WM"
-control <- list(num.labels = 15, type.mf = "GAUSSIAN", type.defuz = "WAM", type.tnorm = "MIN", type.snorm = "MAX", type.implication.func = "ZADEH",
+control <- list(num.labels = 15, type.mf = "GAUSSIAN", type.defuz = "WAM", 
+                type.tnorm = "MIN", type.snorm = "MAX", 
+                type.implication.func = "ZADEH",
                 name="sim-0") 
 
 ## Generate fuzzy model
@@ -76,7 +82,8 @@ y <- t
 y1 <- rbind(res.fit, res.test)
 result.fit <- cbind(data.train[, 3], res.fit)
 result.test <- cbind(real.val, res.test)
-plot(x, y, col="red", main = "Enrollments \n(Real data(red) Vs Sim. result(blue))", type = "l", ylab = "Enrollments")
+plot(x, y, col="red", main = "Enrollments \n(Real data(red) Vs Sim. result(blue))", 
+     type = "l", ylab = "Enrollments")
 lines(x, y1, col="blue")
 abline(v=20-horizon)
 
