@@ -6,7 +6,7 @@ Wang and Mendel’s technique (WM), 1992.)
 opts_chunk$set(results='asis')
 opts_chunk$set(warning = FALSE)
 opts_chunk$set(message = FALSE)
-opts_chunk$set(echo=TRUE)
+opts_chunk$set(echo=F)
 ```
 ```{r loaddata}
 library(frbs)
@@ -14,6 +14,7 @@ library(knitr)
 library(stringi)
 library(xlsx)
 library(pander)
+library(reshape)
 
 
 path <- normalizePath(file.path("..", "data", "UA_enrollments.csv")) #we are in root folder, so '.'
@@ -75,15 +76,27 @@ res.fit <- predict(object, data.fit)
 ## Predicting step
 res.test <- predict(object, data.tst)
 ```
+```{r cmp, fig.height=3}
+## Comparing between simulation and real data
+#op <- par(mfrow = c(2, 1))
+x <- 1:20
+y <- t
+y1 <- rbind(res.fit, res.test)
+df <-data.frame(year=x,real=y,predicted=y1) 
+#result.fit <- cbind(data.train[, 3], res.fit)
+#result.test <- cbind(real.val, res.test)
+qplot(year, value, colour = variable, data = melt(df, 'year'), geom = 'line') +
+geom_vline(xintercept=20-horizon) + theme_bw()
+```
 
-Comparison WM Vs Real Value on UA Enrollments Data Set with Horizon = `r horizon`
+Сравнение модели WM (predicted) с эмпирическими данными (real) с горизонтом прогнозирования = `r horizon`
 ```{r err}
 ## Error calculation
 y.pred <- res.test
 y.real <- real.val
 bench <- cbind(y.pred, y.real)
 #sink(file = "Errors.txt", append = TRUE)
-colnames(bench) <- c("pred. val.", "real. val.")
+colnames(bench) <- c("predicted", "real")
 pander(bench, style="rmarkdown", caption="Значения модели и эмпирические значения")
 residuals <- (y.real - y.pred)
 MSE <- mean(residuals^2)
@@ -92,22 +105,6 @@ SMAPE <- mean(abs(residuals)/(abs(y.real) + abs(y.pred))/2)*100
 err <- c(MSE, RMSE, SMAPE)
 names(err) <- c("MSE", "RMSE", "SMAPE")
 #print("Error Measurement: ")
-pander(data.frame(err), type='rmarkdown', caption="Error measurement") 
+pander(as.matrix(err), type='rmarkdown', caption="Оценки ошибок прогноза") 
 #print(" ") ##FILECONN!!!
-```
-```{r cmp}
-## Comparing between simulation and real data
-op <- par(mfrow = c(2, 1))
-x <- 1:20
-y <- t
-y1 <- rbind(res.fit, res.test)
-result.fit <- cbind(data.train[, 3], res.fit)
-result.test <- cbind(real.val, res.test)
-plot(x, y, col="red", main = "Enrollments \n(Real data(red) Vs Sim. result(blue))", 
-     type = "l", ylab = "Enrollments")
-lines(x, y1, col="blue")
-abline(v=20-horizon)
-
-
-par(op)
 ```
