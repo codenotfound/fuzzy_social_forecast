@@ -1,10 +1,24 @@
-##  Fuzzy rule-based system based on space partition. Wang and Mendel’s technique (WM), 1992.
+# Модель нечеткого прогнозирования распространения наркомании
+(Fuzzy rule-based system based on space partition. 
+Wang and Mendel’s technique (WM), 1992.)
 
+```{r setoptions, echo=FALSE}
+opts_chunk$set(results='asis')
+opts_chunk$set(warning = FALSE)
+opts_chunk$set(message = FALSE)
+opts_chunk$set(echo=TRUE)
+```
+```{r loaddata}
 library(frbs)
 library(knitr)
 library(stringi)
 library(xlsx)
+library(pander)
 
+
+path <- normalizePath(file.path("..", "data", "UA_enrollments.csv")) #we are in root folder, so '.'
+tmp <- read.csv(path)
+if(FALSE){
 ## load file
 ## we are in root folder, so '.'
 path <- normalizePath(file.path("..", "data", 
@@ -16,9 +30,11 @@ Sys.setlocale("LC_TIME", "ru_RU.utf8")
 names(tmp) <- stri_trans_general(names(tmp), 
                    "Any-Latin; nfd; [:nonspacing mark:] remove; nfc")
 tmp$X.Vrema <- as.integer(tmp$X.Vrema <- substr(tmp$X.Vrema, start=0, stop=4))
+}
+```
 
-if(FALSE)
-{
+
+```{r createdataset}
 ## Create dataset
 ## 22 records on UA enrollments
 ## input: enrollments(t-2), enrollments(t-1), 
@@ -40,14 +56,16 @@ data.fit <- data.train[, 1 : 2]
 data.tst <- UA_enrollments[(finish-horizon+1) : finish, 1 : 2]
 real.val <- matrix(UA_enrollments[(finish-horizon+1) : finish, 3], ncol = 1)
 range.data <- apply(data.train,2,range)
-
+```
+```{r modelparams}
 ## Set the method and its parameters
 method.type <- "WM"
 control <- list(num.labels = 15, type.mf = "GAUSSIAN", type.defuz = "WAM", 
                 type.tnorm = "MIN", type.snorm = "MAX", 
                 type.implication.func = "ZADEH",
                 name="sim-0") 
-
+```
+```{r modeling}
 ## Generate fuzzy model
 object <- frbs.learn(data.train, range.data, method.type, control)
 
@@ -56,25 +74,28 @@ res.fit <- predict(object, data.fit)
 
 ## Predicting step
 res.test <- predict(object, data.tst)
+```
 
+Comparison WM Vs Real Value on UA Enrollments Data Set with Horizon = `r horizon`
+```{r err}
 ## Error calculation
 y.pred <- res.test
 y.real <- real.val
 bench <- cbind(y.pred, y.real)
 #sink(file = "Errors.txt", append = TRUE)
 colnames(bench) <- c("pred. val.", "real. val.")
-print(paste("Comparison WM Vs Real Value on UA Enrollments Data Set with Horizon = ", horizon))
-print(bench)
+pander(bench, style="rmarkdown", caption="Значения модели и эмпирические значения")
 residuals <- (y.real - y.pred)
 MSE <- mean(residuals^2)
 RMSE <- sqrt(mean(residuals^2))
 SMAPE <- mean(abs(residuals)/(abs(y.real) + abs(y.pred))/2)*100
 err <- c(MSE, RMSE, SMAPE)
 names(err) <- c("MSE", "RMSE", "SMAPE")
-
-print("Error Measurement: ")
-print(err) 
-print(" ") ##FILECONN!!!
+#print("Error Measurement: ")
+pander(data.frame(err), type='rmarkdown', caption="Error measurement") 
+#print(" ") ##FILECONN!!!
+```
+```{r cmp}
 ## Comparing between simulation and real data
 op <- par(mfrow = c(2, 1))
 x <- 1:20
@@ -89,4 +110,4 @@ abline(v=20-horizon)
 
 
 par(op)
-}
+```
