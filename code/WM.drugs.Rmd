@@ -9,29 +9,10 @@ opts_chunk$set(message = FALSE)
 opts_chunk$set(echo=F)
 ```
 ```{r loaddata}
-library(frbs)
-library(knitr)
-library(stringi)
-library(xlsx)
-library(pander)
-library(reshape)
-
-
+source("helper_functions.R")
 path <- normalizePath(file.path("..", "data", "UA_enrollments.csv")) #we are in root folder, so '.'
 tmp <- read.csv(path)
-if(FALSE){
-## load file
-## we are in root folder, so '.'
-path <- normalizePath(file.path("..", "data", 
-                                "В состоянии наркотического опьянения.xlsx")) 
-tmp <- read.xlsx(path, sheetIndex=1,header=T)
 
-# cleaning
-Sys.setlocale("LC_TIME", "ru_RU.utf8") 
-names(tmp) <- stri_trans_general(names(tmp), 
-                   "Any-Latin; nfd; [:nonspacing mark:] remove; nfc")
-tmp$X.Vrema <- as.integer(tmp$X.Vrema <- substr(tmp$X.Vrema, start=0, stop=4))
-}
 ```
 
 
