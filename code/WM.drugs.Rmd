@@ -76,7 +76,6 @@ geom_vline(xintercept=20-horizon) + theme_bw()
 y.pred <- res.test
 y.real <- real.val
 bench <- cbind(y.pred, y.real)
-#sink(file = "Errors.txt", append = TRUE)
 colnames(bench) <- c("predicted", "real")
 pander(bench, style="rmarkdown", caption="Значения модели и эмпирические значения")
 residuals <- (y.real - y.pred)
@@ -85,7 +84,5 @@ RMSE <- sqrt(mean(residuals^2))
 SMAPE <- mean(abs(residuals)/(abs(y.real) + abs(y.pred))/2)*100
 err <- c(MSE, RMSE, SMAPE)
 names(err) <- c("MSE", "RMSE", "SMAPE")
-#print("Error Measurement: ")
 pander(as.matrix(err), type='rmarkdown', caption="Оценки ошибок прогноза") 
-#print(" ") ##FILECONN!!!
 ```

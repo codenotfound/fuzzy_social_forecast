@@ -5,6 +5,7 @@ library(xlsx)
 library(pander)
 library(reshape)
 library(zoo)
+library(ggplot2)
 
 ## load file
 load_xlsx <- function(fname){
@@ -43,32 +44,29 @@ join_factors <- function(factors, impute = median){
     return(z)
 }
 
-fuzzy_modelling(df, predictand, horizon = 3, method.type = "WM",
-                control = list(num.labels = 15, type.mf = "GAUSSIAN", 
-                               type.defuz = "WAM", type.tnorm = "MIN", 
-                               type.snorm = "MAX", type.implication.func = "ZADEH", 
-                               name="sim-0")) 
+fuzzy_forecast <- function(zdf, predictand, include = TRUE, horizon = 3, 
+                           method.type = "WM", 
+                           control = list(num.labels = 15, type.mf = "GAUSSIAN", 
+                                          type.defuz = "WAM", type.tnorm = "MIN", 
+                                          type.snorm = "MAX", 
+                                          type.implication.func = "ZADEH",
+                                          name="sim-0")) 
 {
-    ## Create dataset
-    ## 22 records on UA enrollments
-    ## input: enrollments(t-2), enrollments(t-1), 
-    ## output: enrollments(t)
+    ## zdf is a zoo object that contains 1..n predictors and exactly one predictand
     ## horizon - number of points to forecast
     start <- 1
-    finish <- nrow(df)
-    predictand <- tmp$enrollments[(start+2):finish]
-    tminus1 <- tmp$enrollments[(start+1):(finish-1)]
-    tminus2 <- tmp$enrollments[start:(finish-2)]
-    UA_enrollments <- data.frame(tminus2, tminus1 , t)
+    finish <- length(zdf[,1])
 
     ## Split the data to the training and testing datasets
-    finish <- nrow(UA_enrollments)
 
-    data.train <- UA_enrollments[start : (finish-horizon), ]
-    data.fit <- data.train[, 1 : 2]
-    data.tst <- UA_enrollments[(finish-horizon+1) : finish, 1 : 2]
-    real.val <- matrix(UA_enrollments[(finish-horizon+1) : finish, 3], ncol = 1)
-    range.data <- apply(data.train,2,range)
+    df <- data.frame(zdf)
+    drops <- c(predictand)
+    print(!(names(df) %in% drops))
+    data.train <- df[start : (finish-horizon), 
+                     if(!include) !(names(df) %in% drops) else 1:length(names(df))] 
+    data.fit <- data.train[,!(names(data.train) %in% drops)]
+    data.tst <- df[(finish-horizon+1) : finish, !(names(df) %in% drops)]
+    range.data <- apply(df,2,range)
 
     ## Generate fuzzy model
     object <- frbs.learn(data.train, range.data, method.type, control)
@@ -77,7 +75,15 @@ fuzzy_modelling(df, predictand, horizon = 3, method.type = "WM",
     ## Predicting step
     res.test <- predict(object, data.tst)
 
-    model_data <- list(object, res.fit, res.test)
+    model_data <- list(object=object, res.fit=res.fit, res.test=res.test)
     return(model_data)
 }
 
+plot_model_data <- function(model_data, predictand)
+{
+    ## Comparing between simulation and real data
+    predicted <- rbind(model_data$res.fit, model_data$res.test)
+    df <-data.frame(year=index(predictand),real=coredata(predictand),predicted=predicted) 
+    qplot(year, value, colour = variable, data = melt(df, 'year'), geom = 'line') +
+    geom_vline(xintercept=df$year[length(model_data$res.fit)]) + theme_bw()
+}
