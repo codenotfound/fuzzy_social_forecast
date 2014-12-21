@@ -1,0 +1,19 @@
+The fuzzy IF-THEN rules:  
+   V1      V2 V3       V4  V5      V6 V7       V8   V9 V10 V11  V12
+1  IF tminus2 is  v.1_a.1 and tminus1 is  v.2_a.1 THEN   t  is  c.1
+2  IF tminus2 is  v.1_a.7 and tminus1 is  v.2_a.7 THEN   t  is  c.5
+3  IF tminus2 is v.1_a.15 and tminus1 is v.2_a.15 THEN   t  is c.15
+4  IF tminus2 is v.1_a.10 and tminus1 is  v.2_a.8 THEN   t  is  c.9
+5  IF tminus2 is  v.1_a.3 and tminus1 is  v.2_a.2 THEN   t  is  c.3
+6  IF tminus2 is v.1_a.10 and tminus1 is  v.2_a.6 THEN   t  is  c.6
+7  IF tminus2 is v.1_a.10 and tminus1 is  v.2_a.7 THEN   t  is  c.5
+8  IF tminus2 is v.1_a.11 and tminus1 is v.2_a.11 THEN   t  is  c.9
+9  IF tminus2 is v.1_a.15 and tminus1 is v.2_a.10 THEN   t  is  c.5
+10 IF tminus2 is v.1_a.12 and tminus1 is v.2_a.11 THEN   t  is c.13
+11 IF tminus2 is  v.1_a.9 and tminus1 is  v.2_a.8 THEN   t  is  c.9
+12 IF tminus2 is v.1_a.15 and tminus1 is v.2_a.11 THEN   t  is  c.8
+13 IF tminus2 is v.1_a.10 and tminus1 is  v.2_a.6 THEN   t  is  c.5
+14 IF tminus2 is  v.1_a.4 and tminus1 is  v.2_a.4 THEN   t  is  c.5
+15 IF tminus2 is  v.1_a.9 and tminus1 is  v.2_a.7 THEN   t  is  c.6
+16 IF tminus2 is v.1_a.13 and tminus1 is  v.2_a.7 THEN   t  is  c.5
+17 IF tminus2 is  v.1_a.9 and tminus1 is  v.2_a.6 THEN   t  is  c.7

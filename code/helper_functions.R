@@ -63,7 +63,7 @@ fuzzy_forecast <- function(zdf, predictand, include = TRUE, horizon = 3,
 
     df <- data.frame(zdf)
     drops <- c(predictand)
-    print(!(names(df) %in% drops))
+    #print(!(names(df) %in% drops))
     data.train <- df[start : (finish-horizon), 
                      if(!include) !(names(df) %in% drops) else 1:length(names(df))] 
     data.fit <- data.train[,!(names(data.train) %in% drops)]
@@ -91,6 +91,23 @@ plot_model_data <- function(model_data)
                      real=coredata(model_data$zoo_predictand), predicted=predicted) 
     qplot(year, value, colour = variable, data = melt(df, 'year'), geom = 'line') +
     geom_vline(xintercept=df$year[length(model_data$res.fit)]) + theme_bw()
+}
+
+
+## Error calculation
+err_calc <- function(model_data){
+    ## make matrix of predicted and real values
+    y.pred <- model_data$res.test
+    y.real <- matrix(model_data$zoo_predictand[(model_data$finish-model_data$horizon+1) : model_data$finish,])
+    bench <- cbind(y.pred, y.real)
+    colnames(bench) <- c("predicted", "real")
+    ## error measurement
+    residuals <- (y.real - y.pred)
+    MSE <- mean(residuals^2)
+    RMSE <- sqrt(mean(residuals^2))
+    SMAPE <- mean(abs(residuals)/(abs(y.real) + abs(y.pred))/2)*100
+    err <- data.frame(MSE = MSE, RMSE = RMSE, SMAPE = SMAPE)
+    return(list(bench = bench,err = err))
 }
 
 # Multiple plot function
