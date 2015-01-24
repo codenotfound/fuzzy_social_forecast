@@ -10,7 +10,8 @@ library(stringr)
 
 ## load file
 load_xlsx <- function(fname){
-    path <- normalizePath(file.path("..", "data", fname)) 
+    path <- normalizePath(file.path("../../", "data", fname)) 
+    #print(path)
     df <- read.xlsx(path, sheetIndex=1,header=T)
     return(df)
 }
@@ -89,7 +90,7 @@ plot_model_data <- function(model_data)
     predicted <- rbind(model_data$res.fit, model_data$res.test)
     df <- data.frame(year=index(model_data$zoo_predictand),
                      real=coredata(model_data$zoo_predictand), predicted=predicted) 
-    qplot(year, value, colour = variable, data = melt(df, 'year'), geom = 'line') +
+    qplot(year, value, shape = variable, data = melt(df, 'year'), geom = 'point') +
     geom_vline(xintercept=df$year[length(model_data$res.fit)]) + theme_bw()
 }
 
