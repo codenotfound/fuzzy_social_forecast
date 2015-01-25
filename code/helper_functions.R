@@ -10,7 +10,7 @@ library(stringr)
 
 ## load file
 load_xlsx <- function(fname){
-    path <- normalizePath(file.path("../../", "data", fname)) 
+    path <- normalizePath(file.path("../", "data", fname)) 
     #print(path)
     df <- read.xlsx(path, sheetIndex=1,header=T)
     return(df)
