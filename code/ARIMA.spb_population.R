@@ -1,5 +1,4 @@
 library(forecast)
-
 ## load file
 path <- normalizePath(file.path(".", "data", "spb_population.csv")) #we are in root folder, so '.'
 spb_population <- read.csv(path, sep = ";")

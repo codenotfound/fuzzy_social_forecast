@@ -1,0 +1,38 @@
+# Модель нечеткого прогнозирования распространения наркомании
+(Fuzzy rule-based system based on space partition. 
+Wang and Mendel’s technique (WM), 1992.)
+
+```{r setoptions, echo=FALSE}
+opts_chunk$set(results='asis')
+opts_chunk$set(warning = FALSE)
+opts_chunk$set(message = FALSE)
+opts_chunk$set(echo=T)
+```
+```{r preparedata}
+source("helper_functions.R")
+filenames <- list("Число лиц, осужденных за (ст. 228-233 УК РФ)  возрастная структура осужденных  14-17 лет.xlsx", 
+                  "Число лиц, осужденных за (ст. 228-233 УК РФ)  возрастная структура осужденных  18-24 лет.xlsx", 
+                  "Состоит на учете больных с диагнозом «наркомания», на 100 тыс. населения.xlsx")
+factors <- sapply(filenames, load_xlsx)
+factors <- lapply(factors, clean_xlsx_df)
+filenames <- lapply(filenames, str_replace_all, "[^[:alnum:]]", ".")
+names(factors) <- sub("\\.[[:alnum:]]+$", "", filenames)
+zdf <- join_factors(factors)
+```
+
+```{r modelling}
+predictand = "Состоит.на.учете.больных.с.диагнозом..наркомания...на.100.тыс..населения"
+model_data <- fuzzy_forecast(zdf, predictand)
+```
+```{r cmp, fig.height=3}
+plot_model_data(model_data)
+```
+
+Сравнение модели WM (predicted) с эмпирическими данными (real) с горизонтом прогнозирования = `r horizon`
+```{r err}
+## Error calculation
+errors <- err_calc(model_data)
+pander(errors$bench, style="rmarkdown", 
+       caption="Значения модели и эмпирические значения")
+pander(errors$err, style='rmarkdown', caption="Оценки ошибок прогноза") 
+```
