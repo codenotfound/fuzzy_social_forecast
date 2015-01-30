@@ -1,7 +1,7 @@
 library(shiny)
 library(grDevices)
-library(rCharts)
-options(RCHART_WIDTH = 800)
+#library(rCharts)
+#options(RCHART_WIDTH = 800)
 source("code/helper_functions.R")
 
 shinyServer( function(input, output) {
@@ -15,30 +15,47 @@ shinyServer( function(input, output) {
       zdf <- join_factors(factors)
       predictand <- "Состоит.на.учете.больных.с.диагнозом..наркомания...на.100.тыс..населения"
 
-      dataset <- reactive({
+      ## Interactive dataset generation
+      model_data <- reactive({
           horizon <- input$horizon
           model_data <- fuzzy_forecast(zdf, predictand, horizon = horizon)
-          ## Comparing between simulation and real data
+      })
+      ## Plotting
+      output$fuzzyPlot <- renderPlot({ #renderChart2({
+          ## Comparing between simulation and real data. Preparing dataset.
+          model_data  <- model_data()
           predicted <- rbind(model_data$res.fit, model_data$res.test)
           df <- data.frame(year=index(model_data$zoo_predictand),
                          real=coredata(model_data$zoo_predictand), predicted=predicted) 
-          melt(df, 'year')
+          dataset <- melt(df, 'year')
 
-      })
-      output$fuzzyPlot <- renderPlot({ #renderChart2({
-         # cat(str(melt(df,'year')))
-          #p <- qplot(year, value, shape = variable, data = dataset(), geom = 'point') #+
-          p <- ggplot(dataset(), aes(x=year, y=value, colour=variable)) + geom_line(aes(group=variable))
-         # geom_vline(xintercept=df$year[length(model_data$res.fit)]) + theme_bw()
-          #plot(melt(df, 'year')) 
+          real <- subset(dataset, variable=="real", select = c(year,value))
+          predicted <- subset(dataset, variable=="predicted", select = c(year,value))
 
-         # p <- rPlot(value ~ year, color = 'variable', type = 'line', data = melt(df,'year'))
-          #p$layer(data=data.frame(x=df$year[length(model_data$res.fit)],y=180), copy_layer=T, type='line', color=list(const="blue"))
-          #p$layer(x=df$year[length(model_data$res.fit)],y='year', data = melt(df,'year'), type='line')
-          #return(p)
-          print(p)
-          #plot(dataset())
+          # get the range for the x and y axis
+          xrange <- range(real$year)
+          yrange <- range(real$value)
+
+          # set up the plot
+          plot(xrange, yrange, type="n", xlab="Year", ylab="Value") 
+          lines(real, col = "red")
+          lines(predicted, col = "blue")
+          abline(v=df$year[length(model_data$res.fit)])
       })
+
+      ## Real vs predicted values
+      output$valCmp <- renderTable({
+      errors <- err_calc(model_data())
+      errors$bench
+      })
+
+      ## Error table
+      output$errTable <- renderTable({
+      errors <- err_calc(model_data())
+      #pander(errors$bench, style="rmarkdown", 
+      #caption="Значения модели и эмпирические значения")
+      errors$err#, style='rmarkdown', caption="Оценки ошибок прогноза") 
+  })
     
   }
 )

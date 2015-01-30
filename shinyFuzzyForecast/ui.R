@@ -9,6 +9,8 @@ shinyUI(pageWithSidebar(
   ),
   mainPanel(
     #showOutput("fuzzyPlot", "polycharts")
-    plotOutput("fuzzyPlot")
+    plotOutput("fuzzyPlot"),
+    tableOutput("valCmp"),
+    tableOutput("errTable")
   )
 ))
