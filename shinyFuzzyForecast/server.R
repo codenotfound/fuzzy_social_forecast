@@ -5,9 +5,6 @@ library(grDevices)
 source("code/helper_functions.R")
 
 shinyServer( function(input, output) {
-      filenames <- list("Численность безработных всего.xlsx", 
-                        "Преступления связанные с незаконным оборотом наркотиков  зарегистрировано.xlsx", 
-                        "Состоит на учете больных с диагнозом «наркомания», на 100 тыс. населения.xlsx")
       factors <- lapply(filenames, load_xlsx)
       factors <- lapply(factors, clean_xlsx_df)
       filenames <- lapply(filenames, str_replace_all, "[^[:alnum:]]", ".")
@@ -21,7 +18,7 @@ shinyServer( function(input, output) {
           model_data <- fuzzy_forecast(zdf, predictand, horizon = horizon)
       })
       ## Plotting
-      output$fuzzyPlot <- renderPlot({ #renderChart2({
+      output$fuzzyPlot <- renderPlot({ 
           ## Comparing between simulation and real data. Preparing dataset.
           model_data  <- model_data()
           predicted <- rbind(model_data$res.fit, model_data$res.test)
@@ -42,6 +39,8 @@ shinyServer( function(input, output) {
           lines(predicted, col = "blue")
           abline(v=df$year[length(model_data$res.fit)])
       })
+      output$mfPlot <- renderPlot({plotMF(model_data()$object)})
+      output$fuzzySummary <- renderPrint({summary(model_data()$object)})
 
       ## Real vs predicted values
       output$valCmp <- renderTable({
