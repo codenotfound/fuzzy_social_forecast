@@ -21,6 +21,10 @@ shinyServer( function(input, output) {
       output$fuzzyPlot <- renderPlot({ 
           ## Comparing between simulation and real data. Preparing dataset.
           model_data  <- model_data()
+          sink("sink-examp.txt")
+          summary(model_data$object)  
+          sink()
+          unlink("sink-examp.txt")
           predicted <- rbind(model_data$res.fit, model_data$res.test)
           df <- data.frame(year=index(model_data$zoo_predictand),
                          real=coredata(model_data$zoo_predictand), predicted=predicted) 
