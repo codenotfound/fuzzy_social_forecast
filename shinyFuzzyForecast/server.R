@@ -15,7 +15,9 @@ shinyServer( function(input, output) {
       ## Interactive dataset generation
       model_data <- reactive({
           horizon <- input$horizon
-          model_data <- fuzzy_forecast(zdf, predictand, horizon = horizon)
+          method.type <- input$method.type
+          model_data <- fuzzy_forecast(zdf, predictand, horizon = horizon,
+                                       method.type = method.type)
       })
       ## Plotting
       output$fuzzyPlot <- renderPlot({ 

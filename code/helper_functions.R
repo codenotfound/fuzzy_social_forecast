@@ -47,12 +47,12 @@ join_factors <- function(factors, impute = median){
 }
 
 fuzzy_forecast <- function(zdf, predictand, include = TRUE, horizon = 3, 
-                           method.type = "WM", 
-                           control = list(num.labels = 15, type.mf = "GAUSSIAN", 
-                                          type.defuz = "WAM", type.tnorm = "MIN", 
-                                          type.snorm = "MAX", 
-                                          type.implication.func = "ZADEH",
-                                          name="sim-0")) 
+                           method.type = "WM")#, 
+                           # control = list(num.labels = 15, type.mf = "GAUSSIAN", 
+                                          # type.defuz = "WAM", type.tnorm = "MIN", 
+                                          # type.snorm = "MAX", 
+                                          # type.implication.func = "ZADEH",
+                                          # name="default settings")) 
 {
     ## zdf is a zoo object that contains 1..n predictors and exactly one predictand
     ## include - whether to include predicand as one of the predictors or not
@@ -72,7 +72,7 @@ fuzzy_forecast <- function(zdf, predictand, include = TRUE, horizon = 3,
     range.data <- apply(df,2,range)
 
     ## Generate fuzzy model
-    object <- frbs.learn(data.train, range.data, method.type, control)
+    object <- frbs.learn(data.train, range.data, method.type)#, control)
     ## Fitting step
     res.fit <- predict(object, data.fit)
     ## Predicting step
