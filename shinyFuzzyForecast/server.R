@@ -49,7 +49,7 @@ shinyServer( function(input, output) {
       output$fuzzySummary <- renderPrint({summary(model_data()$object)})
 
       ## Real vs predicted values
-      output$valCmp <- renderTable({
+      output$valCmp <- renderDataTable({
       errors <- err_calc(model_data())
       errors$bench
       })

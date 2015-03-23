@@ -37,7 +37,7 @@ shinyUI(pageWithSidebar(
     mainPanel(
         tabsetPanel(
             tabPanel("Plot", plotOutput("fuzzyPlot")),
-            tabPanel("Summary", tableOutput("valCmp"), tableOutput("errTable")),
+            tabPanel("Summary", dataTableOutput("valCmp"), tableOutput("errTable")),
             tabPanel("Fuzzy logic", plotOutput("mfPlot"), verbatimTextOutput("fuzzySummary"))
 
         )
