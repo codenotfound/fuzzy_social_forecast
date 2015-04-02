@@ -1,0 +1,27 @@
+\documentclass[a4paper,14pt]{report}
+
+\input{preamble_thesis}
+\author{Дмитрий Великий}
+\title{Магистерская диссертация}
+\date{\today}
+
+\begin{document} % конец преамбулы, начало документа
+
+\tableofcontents
+\chapter{Введение}
+\include{chapters/introduction}
+\chapter{Нечеткое прогнозирование временных рядов}
+\include{chapters/chapter01}
+\chapter{Опыты нечеткого прогнозирования}
+\include{chapters/chapter02}
+\chapter{Разработка модели прогнозирования численности наркозависимых в 
+Санкт-Петербурге на основе нечеткой модели с многими переменными}
+\include{chapters/chapter03}
+\chapter{Заключение}
+\include{chapters/conclusion}
+\newpage
+\printbibliography[heading=bibintoc]
+
+\end{document} % конец документа
+
+
