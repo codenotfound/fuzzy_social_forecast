@@ -81,7 +81,7 @@
     территории на примере противодействия распространению наркомании в
     Санкт-Петербурге}
 % \subtitle{Документы и презентации в \LaTeX}
-\author{Великий Дмитрий Павлович}
+\author{Великий Дмитрий Павлович \\ Научный руководитель: Захаров Юрий Никитич}
 \date{\today}
 \institute[ИТМО]{Университет ИТМО \\ Кафедра управления государственными
     информационными системами}
@@ -131,14 +131,17 @@
 \begin{frame}
     \frametitle{Обучающий алгоритм} 
     % \framesubtitle{\protect\insertsubsection} 
-	\begin{itemize}
-        \item Нечеткая логика.
-	\end{itemize}
+	\begin{block}{Нечеткая логика. \footfullcite{Wang1992}}
+        \begin{enumerate}
+            \item Разбиение областей определения;
+            \item Генерация нечетких правил;
+            \item Присвоение степеней правилам;
+            \item Создание комбинированной нечеткой базы правил;
+            \item Определение отображения входного пространства на выходное
+                (дефаззификация).
+        \end{enumerate}
+	\end{block}
 
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.7\textwidth]{simple_dimmer_fl.png}
-    \end{figure}
 \end{frame}
 
 \begin{frame}
@@ -153,28 +156,59 @@
 
 \begin{frame}
     \frametitle{Компонент Банка данных ИС ИАО}
-    \url{http://tiny.cc/FuzzyForecast}
-    \begin{block}{Язык \textbf{R}}
-        пакеты \alert{Shiny}, \alert{frbs}.
-    \end{block}
     \begin{figure}
         \centering
         \includegraphics[width=\textwidth]{screenshot1.png}
     \end{figure}
+    \url{http://tiny.cc/FuzzyForecast}
 \end{frame}
 \begin{frame}
-    \frametitle{Применение модели для ППР органов гос. власти}
-    \begin{block}{Прогноз}
-        \begin{figure}
-            \centering
-            \includegraphics[scale=0.3]{values_small.png}
-        \end{figure}
-    \end{block}
-    \begin{block}{Сценарный анализ}
-        ЕСЛИ П1 ПРИНАДЛЕЖИТ К О1 И П2 ПРИНАДЛЕЖИТ К О2 ТО П3 ПРИНАДЛЕЖИТ К О3.
-    \end{block}
+    \frametitle{Компонент Банка данных ИС ИАО}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{screenshot2.png}
+    \end{figure}
+\end{frame}
+\begin{frame}
+    \frametitle{Компонент Банка данных ИС ИАО}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{screenshot3.png}
+    \end{figure}
+\end{frame}
+\begin{frame}
+    \frametitle{Нечеткие правила}
+    \textbf{IF} Численность безработных всего is \alert{v.1\_a.15} 
+    
+    \textbf{AND} Преступления, связанные с незаконным оборотом наркотиков зарегистрировано is
+    \alert{v.2\_a.1} 
+
+    \textbf{THEN} Состоит на учете больных с диагнозом наркомания на 100 тыс населения is
+    \alert{c.1}
+\end{frame}
+\begin{frame}
+    \frametitle{Преимущества метода}
+    \begin{itemize}
+        \item Моделирование связей между показателями;
+        \item Возможность учета суждений экспертов;
+        \item Адаптируемость под исходные данные.
+    \end{itemize}
 
 \end{frame}
-\plain{Спасибо за внимание!}{}
+\begin{frame}
+    \frametitle{Направления развития}
+    \begin{itemize}
+        \item Сравнение результатов модели с аналогами из Банка моделей;
+        \item Повышение юзабилити модели для ППР органов гос. власти.
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \frametitle{Спасибо за внимание!}
+    \begin{block}{Великий Дмитрий Павлович}
+        Поддержка принятия управленческих решений для развития урбанизированной
+        территории на примере противодействия распространению наркомании в
+        Санкт-Петербурге
+    \end{block}
+\end{frame}
 
 \end{document}
