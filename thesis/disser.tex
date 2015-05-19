@@ -6,26 +6,26 @@
 \date{\today}
 
 \begin{document} % конец преамбулы, начало документа
-
+% \sloppy % НЕЛЬЗЯ ПЕРЕНОСЫ!!!
 \tableofcontents
 \chapter*{Введение}
 \addcontentsline{toc}{chapter}{Введение}
-\include{chapters/introduction}
+\input{chapters/introduction}
 \chapter{Международный опыт использования информационных систем при реализации
     государственной антинаркотической политики}
-\include{chapters/chapter01}
+\input{chapters/chapter01}
 \chapter{Обзор методов прогнозирования временных рядов}
-\include{chapters/chapter02}
+\input{chapters/chapter02}
 \chapter{Разработка модели прогнозирования численности наркозависимых в 
 Санкт-Петербурге на основе нечеткой модели с многими переменными}
-\include{chapters/chapter03}
+\input{chapters/chapter03}
 \chapter{Применение модели прогнозирования численности наркозависимых для
     информационно-аналитической поддержки принятия решений органами
     государственной власти}
-\include{chapters/chapter04}
+\input{chapters/chapter04}
 \chapter*{Заключение}
 \addcontentsline{toc}{chapter}{Заключение}
-\include{chapters/conclusion}
+\input{chapters/conclusion}
 \newpage
 \printbibliography[heading=bibintoc]
 
