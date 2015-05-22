@@ -33,6 +33,8 @@ shinyServer( function(input, output) {
           dataset <- melt(df, 'year')
 
           real <- subset(dataset, variable=="real", select = c(year,value))
+          print("REAL#####")
+          print(head(real))
           predicted <- subset(dataset, variable=="predicted", select = c(year,value))
 
           # get the range for the x and y axis
