@@ -73,11 +73,9 @@
 Объектом прогнозирования являются данные по поступившим в университет Алабамы абитуриентам за период 1971-1992 гг. (см. Рис.~\ref{figure:UA_enrollments}). Именно они были использованы в статье, впервые описавшей теорию нечетких временных рядов и с тех пор являются основой для сравнения моделей.  
 
 \begin{figure}[bhtp]
-	\begin{center}			
-		\includegraphics{images/UA_enrollments.pdf}
-		\caption{Число поступивших в Алабамский университет, 1971-1992.}		
-		\label{figure:UA_enrollments}
-	\end{center}
+    \includegraphics{images/UA_enrollments.pdf}
+    \caption{Число поступивших в Алабамский университет, 1971-1992.}		
+    \label{figure:UA_enrollments}
 \end{figure}
 
 По итогам экспресс-теста регрессионных моделей решено было выбрать модель авторов Л-Х. Ванга и Дж. М. Менделя, основанную на разбиении области определения \cite{Wang1992}. Критериями отбора были точность прогноза на тестовых данных и сложность вычислений. Модель демонстрирует хорошую точность и низкую вычислительную сложность. 
@@ -102,7 +100,6 @@
 
 \begin{table}[bhtp]
 	\caption{Пример нечетких правил}
-	\begin{center}
 		\begin{tabular}{ | c | c | }
 			\hline
 			1 & IF tminus2 is  v.1\_a.1 and tminus1 is  v.2\_a.1 THEN   t  is  c.1 \\
@@ -114,16 +111,13 @@
 			17 & IF tminus2 is  v.1\_a.9 and tminus1 is  v.2\_a.6 THEN   t  is  c.7 \\
 			\hline
 		\end{tabular}		
-	\end{center}
 	\label{table:fuzzy_rules_example}	
 \end{table}
 
 \begin{figure}[bhtp]
-	\begin{center}
-		\includegraphics[scale=0.8]{images/MFexample.pdf}
-		\caption{Пример функций принадлежности для лингвистических переменных.}		
-		\label{figure:MFexample}
-	\end{center}
+    \includegraphics{images/MFexample.pdf}
+    \caption{Пример функций принадлежности для лингвистических переменных.}		
+    \label{figure:MFexample}
 \end{figure}
 
 На выходе модели --- численность поступивших в университет Алабамы за период 1971-1992 гг. ($t$). На входе --- эта же переменная, но со сдвигом на один ($tminus1$) и два ($tminus2$) года назад, соответственно. Таким образом реализована импровизированная авторегрессия по переменной $t$. 
@@ -137,36 +131,30 @@
 В эксперименте использовались два значения горизонта прогнозирования --- 5 лет (см. Рис.~\ref{figure:UA_model_h=5}) и 3 года (см. Рис.~\ref{figure:UA_model_h=3}). Заметим, что в обоих случаях симуляция в области данных для обучения сработала достаточно хорошо, несмотря на крайне малый объем выборки. 
 
 \begin{figure}[bhtp]
-	\begin{center}
-		\includegraphics{images/UA_model_h=5.pdf}
-		\caption{Прогноз числа поступивших в Алабамский университет, \newline горизонт 5 лет.}		
-		\label{figure:UA_model_h=5}
-	\end{center}
+    \includegraphics{images/UA_model_h=5.pdf}
+    \caption{Прогноз числа поступивших в Алабамский университет, \newline горизонт 5 лет.}		
+    \label{figure:UA_model_h=5}
 \end{figure}
 
 \begin{figure}[bhtp]
-	\begin{center}
-		\includegraphics{images/UA_model_h=3.pdf}
-		\caption{Прогноз числа поступивших в Алабамский университет, \newline горизонт 3 года.}		
-		\label{figure:UA_model_h=3}
-	\end{center}
+    \includegraphics{images/UA_model_h=3.pdf}
+    \caption{Прогноз числа поступивших в Алабамский университет, \newline горизонт 3 года.}		
+    \label{figure:UA_model_h=3}
 \end{figure}
 
 В части прогноза же результаты неудовлетворительные. Это подтверждается и оценкой погрешности прогнозирования (см. Табл.~\ref{table:WM-error}). Погрешность гораздо выше, чем при авторегрессии методами нечетких временных рядов. С другой стороны, точность увеличивается при уменьшении горизонта прогнозирования. Это говорит о том, что модель адаптируется при изменении параметров и входных данных. 
 
 \begin{table}[bhtp]
 	\caption{Оценка точности результатов прогнозирования}
-	\begin{center}
-		\begin{tabular}{ | c | c | c | c | }
-			\hline
-			Горизонт & MSE & RMSE & SMAPE \\
-			\hline
-			5 & 6.750612e+06 & 2.598194e+03 & 3.674307e+00  \\
-			\hline
-			3 & 3.897863e+06 & 1.974301e+03 & 2.330708e+00  \\
-			\hline
-		\end{tabular}		
-	\end{center}
+    \begin{tabular}{ | c | c | c | c | }
+        \hline
+        Горизонт & MSE & RMSE & SMAPE \\
+        \hline
+        5 & 6.750612e+06 & 2.598194e+03 & 3.674307e+00  \\
+        \hline
+        3 & 3.897863e+06 & 1.974301e+03 & 2.330708e+00  \\
+        \hline
+    \end{tabular}		
 	\label{table:WM-error}	
 \end{table}
 
@@ -294,21 +282,19 @@
 
 \begin{table}[bhtp]
     \caption{Оценка точности результатов прогнозирования}
-    \begin{center}
-        \begin{tabular}{ | c | c | c | c | }
-            \hline
-            № набора & MSE & RMSE & SMAPE \\
-            \hline
-            (1-мерный) & 6.750612e+06 & 2.598194e+03 & 3.674307e+00  \\
-            \hline
-            1 & 1099 & 33.14 & 3.733  \\
-            \hline
-            2 & 6460 & 80.38 & 11.14  \\
-            \hline
-            3 & 9805 & 99.02 & 14.44  \\
-            \hline
-        \end{tabular}		
-    \end{center}
+    \begin{tabular}{ | c | c | c | c | }
+        \hline
+        № набора & MSE & RMSE & SMAPE \\
+        \hline
+        (1-мерный) & 6.750612e+06 & 2.598194e+03 & 3.674307e+00  \\
+        \hline
+        1 & 1099 & 33.14 & 3.733  \\
+        \hline
+        2 & 6460 & 80.38 & 11.14  \\
+        \hline
+        3 & 9805 & 99.02 & 14.44  \\
+        \hline
+    \end{tabular}		
     \label{table:WM-error-multi}	
 \end{table}
 
@@ -341,27 +327,21 @@
 \end{itemize}
 
 \begin{figure}[bhtp]
-    \begin{center}
-        \includegraphics{images/m_plot1.png}
-        \caption{Прогноз с набором показателей №1, горизонт 3 года.}		
-        \label{figure:m_plot1}
-    \end{center}
+    \includegraphics{images/m_plot1.png}
+    \caption{Прогноз с набором показателей №1, горизонт 3 года.}		
+    \label{figure:m_plot1}
 \end{figure}
 
 \begin{figure}[bhtp]
-    \begin{center}
-        \includegraphics{images/m_plot2.png}
-        \caption{Прогноз с набором показателей №2, горизонт 3 года.}		
-        \label{figure:m_plot2}
-    \end{center}
+    \includegraphics{images/m_plot2.png}
+    \caption{Прогноз с набором показателей №2, горизонт 3 года.}		
+    \label{figure:m_plot2}
 \end{figure}
 
 \begin{figure}[bhtp]
-    \begin{center}
-        \includegraphics{images/m_plot3.png}
-        \caption{Прогноз с набором показателей №3, горизонт 3 года.}		
-        \label{figure:m_plot3}
-    \end{center}
+    \includegraphics{images/m_plot3.png}
+    \caption{Прогноз с набором показателей №3, горизонт 3 года.}		
+    \label{figure:m_plot3}
 \end{figure}
 
 С точки зрения точности прогноза, при использовании набора показателей №1
