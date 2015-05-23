@@ -147,6 +147,8 @@
 \let\oldincludegraphics\includegraphics
 \renewcommand{\includegraphics}[2][]{%
     \oldincludegraphics[#1,height =7cm]{#2}}
+\newcommand{\includetextwidthgraphics}[2][]{%
+    \oldincludegraphics[#1,width =\textwidth]{#2}}
 % Центрирование картинок и таблиц
 \usepackage{floatrow}
 \floatsetup[figure]{objectset=centering}
