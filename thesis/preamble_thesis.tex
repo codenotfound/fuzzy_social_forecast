@@ -165,12 +165,12 @@
  
 \titleformat{\section}
     {\normalsize\bfseries\filcenter}
-    {\thesection}
+    {\thesection.}
     {1em}{}
  
 \titleformat{\subsection}
     {\normalsize\bfseries\filcenter}
-    {\thesubsection}
+    {\thesubsection.}
     {1em}{}
  
 % Настройка вертикальных и горизонтальных отступов
@@ -182,3 +182,6 @@
 % Подписи рисунков и таблиц
 \usepackage[justification=centering, labelsep=period, figurewithin=none,
 tablewithin=none, tableposition=top]{caption}
+%Точки в содержании
+\usepackage[dotinlabels]{titletoc}
+% \dottedcontents{chapter}
