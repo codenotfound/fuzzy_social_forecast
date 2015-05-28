@@ -175,8 +175,8 @@
  
 % Настройка вертикальных и горизонтальных отступов
 \titlespacing*{\chapter}{0pt}{-30pt}{8pt}
-\titlespacing*{\section}{\parindent}{*4}{*4}
-\titlespacing*{\subsection}{\parindent}{*4}{*4}
+% \titlespacing*{\section}{\parindent}{*4}{*4}
+% \titlespacing*{\subsection}{\parindent}{*4}{*4}
 %Содержание
 \addto\captionsrussian{\renewcommand{\contentsname}{СОДЕРЖАНИЕ}}
 % Подписи рисунков и таблиц
@@ -184,4 +184,6 @@
 tablewithin=none, tableposition=top]{caption}
 %Точки в содержании
 \usepackage[dotinlabels]{titletoc}
-% \dottedcontents{chapter}
+%Приложение
+\usepackage[titletoc]{appendix}
+
