@@ -7,8 +7,10 @@ imputed_registered_drug_users <- read.csv(path)
 y<-ts(imputed_registered_drug_users$number[1:20], frequency=12)
 fit <- tslm(y~trend+season)
 forecast <- forecast(fit,h=3)
+png(filename="linear.png")
 plot(forecast)
 lines(imputed_registered_drug_users$number, col="red", type = "l")
+dev.off()
 ## error calculation
 y.pred <- forecast$mean
 y.real <- imputed_registered_drug_users$number[21:23]

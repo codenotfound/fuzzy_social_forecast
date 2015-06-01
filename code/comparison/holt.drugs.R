@@ -4,10 +4,12 @@ path <- normalizePath(file.path(".", "imputed_registered_drug_users.csv")) #we a
 imputed_registered_drug_users <- read.csv(path)
 
 ## forecast
-forecast <- holt(as.ts(imputed_registered_drug_users$number[1:20]),h=3)
+fit <- holt(as.ts(imputed_registered_drug_users$number[1:20]),h=3)
 # forecast <- forecast(fit,h=3)
+png(filename="holt.png")
 plot(forecast(fit,h=3))
 lines(imputed_registered_drug_users$number, col="red", type = "l")
+dev.off()
 ## error calculation
 y.pred <- forecast$mean
 y.real <- imputed_registered_drug_users$number[21:23]

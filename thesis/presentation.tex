@@ -81,11 +81,12 @@
     территории на примере противодействия распространению наркомании в
     Санкт-Петербурге}
 % \subtitle{Документы и презентации в \LaTeX}
-\author{Великий Дмитрий Павлович \\ Научный руководитель: Захаров Юрий Никитич}
+\author{Великий Дмитрий Павлович \\ Научный руководитель: Захаров Юрий Никитич
+    \\ Научный консультант: Митягин Сергей Александрович}
 \date{\today}
 \institute[ИТМО]{Университет ИТМО \\ Кафедра управления государственными
     информационными системами}
-% \logo{\includegraphics[height=2cm]{bw_rus.png}}
+\logo{\includegraphics[height=2cm]{bw_rus.png}}
 
 \begin{document}
 
@@ -97,7 +98,7 @@
 	\begin{itemize}
         \item \alert{Модель} прогнозирования численности наркозависимых в
             Санкт-Петербурге;
-        \item \alert{Компонент} Банка Данных ИС ИАО, предназначенный для анализа и
+        \item \alert{Компонент} МАСП <<Прогноз>>, предназначенный для анализа и
             прогнозирования динамики численности наркозависимых на территории
             Санкт-Петербурга.
 	\end{itemize}
@@ -117,6 +118,13 @@
     \end{quote}
 \end{frame}
 \begin{frame}
+    \frametitle{Мониторинг наркоситуации. АИС «Антинар СПб»}%\protect\insertsection} 
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{org_mezhved_antinar.png}
+    \end{figure}
+\end{frame}
+\begin{frame}
     \frametitle{Исходные данные}
     \textbf{Индикаторы воздействия}
     \begin{itemize}
@@ -127,6 +135,36 @@
 \end{frame}
 % \section{Модель прогнозирования}
 \plain{Модель прогнозирования}{}
+\begin{frame}
+    \frametitle{Описание модели} 
+    \begin{enumerate}
+        \item Определение исходных данных;
+        \item Заполнение пропусков в исходных данных;
+        \item Выбор горизонта прогнозирования;
+        \item Обучение модели с помощью алгоритма нечетко-логического вывода;
+        \item Получение аналитических продуктов модели;
+        \item Интерпретация результатов модели.
+    \end{enumerate}
+\end{frame}
+\begin{frame}
+    \frametitle{Вероятностное моделирование} 
+    \begin{equation}
+        p_{addiction} = \frac{\rho_{drug}}{\rho_{population}}\cdot k
+    \end{equation}
+
+    \(p_{addiction}\) --- вероятность заболевания наркозависимостью для
+    отдельно взятого человека, 
+    
+    \(\rho_{drug}\) --- численность заболевших
+    наркоманией, зарегистрированных впервые в жизни, 
+    
+    \(\rho_{population}\) ---
+    численность населения города Санкт-Петербурга, 
+    
+    \(k\) --- коэффициент
+    латентности.
+\end{frame}
+
 % \subsection{Обучающий алгоритм}
 \begin{frame}
     \frametitle{Обучающий алгоритм} 
@@ -143,41 +181,8 @@
 	\end{block}
 
 \end{frame}
-
 \begin{frame}
-    \frametitle{Методика анализа наркоситуации} 
-	\begin{itemize}
-        \item Учет коэффициента латентности;
-        \item Анализ пороговых уровней;
-        \item Перевод абсолютных значений численности наркозависимых в
-            вероятность заболеваемости наркозависимостью.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Компонент Банка данных ИС ИАО}
-    \begin{figure}
-        \centering
-        \includegraphics[width=\textwidth]{screenshot1.png}
-    \end{figure}
-    \url{http://tiny.cc/FuzzyForecast}
-\end{frame}
-\begin{frame}
-    \frametitle{Компонент Банка данных ИС ИАО}
-    \begin{figure}
-        \centering
-        \includegraphics[width=\textwidth]{screenshot2.png}
-    \end{figure}
-\end{frame}
-\begin{frame}
-    \frametitle{Компонент Банка данных ИС ИАО}
-    \begin{figure}
-        \centering
-        \includegraphics[width=\textwidth]{screenshot3.png}
-    \end{figure}
-\end{frame}
-\begin{frame}
-    \frametitle{Нечеткие правила}
+    \frametitle{База нечетких правил}
     \textbf{IF} Численность безработных всего is \alert{v.1\_a.15} 
     
     \textbf{AND} Преступления, связанные с незаконным оборотом наркотиков зарегистрировано is
@@ -185,6 +190,29 @@
 
     \textbf{THEN} Состоит на учете больных с диагнозом наркомания на 100 тыс населения is
     \alert{c.1}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Компонент МАСП <<Прогноз>>}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{screenshot1.png}
+    \end{figure}
+    \url{http://tiny.cc/FuzzyForecast}
+\end{frame}
+\begin{frame}
+    \frametitle{Компонент МАСП <<Прогноз>>}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{screenshot2.png}
+    \end{figure}
+\end{frame}
+\begin{frame}
+    \frametitle{Компонент МАСП <<Прогноз>>}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{screenshot3.png}
+    \end{figure}
 \end{frame}
 \begin{frame}
     \frametitle{Преимущества метода}

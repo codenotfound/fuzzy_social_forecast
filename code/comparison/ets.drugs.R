@@ -6,8 +6,12 @@ imputed_registered_drug_users <- read.csv(path)
 ## forecast
 fit <- ets(as.ts(imputed_registered_drug_users$number[1:20]))
 forecast <- forecast(fit,h=3)
+
+png(filename="ets.png")
 plot(forecast(fit,h=3))
 lines(imputed_registered_drug_users$number, col="red", type = "l")
+dev.off()
+
 ## error calculation
 y.pred <- forecast$mean
 y.real <- imputed_registered_drug_users$number[21:23]
